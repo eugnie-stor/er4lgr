@@ -3,319 +3,1178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Derin Studios</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Derin Studios Başvuru</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
+        :root {
+            --primary: #000000;
+            --secondary: #ffffff;
+            --accent: #ff4757;
+            --bg: #121212;
+            --card: #1e1e1e;
+            --text: #ffffff;
+            --text-secondary: #b3b3b3;
+            --success: #2ecc71;
+            --error: #e74c3c;
+            --pending: #f39c12;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #000;
-            color: #fff;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Arka Plan Animasyonu */
-        .background-animation {
+        /* Arka plan animasyonu */
+        .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: radial-gradient(circle, rgba(40, 40, 40, 0.8), rgba(0, 0, 0, 1));
-            animation: pulse 10s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.2); opacity: 1; }
-        }
-
-        /* Yıldız Animasyonu */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: transparent;
+            opacity: 0.1;
             overflow: hidden;
         }
 
-        .stars::before, .stars::after {
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--secondary);
+            opacity: 0.2;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-1000px) rotate(720deg); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 30px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
             content: '';
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite ease-in-out;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent);
         }
 
-        .stars::before {
-            top: 20%;
-            left: 30%;
-            animation-delay: 0.5s;
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-top: 15px;
         }
 
-        .stars::after {
-            top: 50%;
-            left: 70%;
-            animation-delay: 1s;
+        .card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(0);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
         }
 
-        /* Navbar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text);
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .button {
+            display: inline-flex;
             align-items: center;
-            padding: 1rem 2rem;
-            background: rgba(20, 20, 20, 0.8);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            justify-content: center;
+            width: 100%;
+            padding: 18px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--secondary);
+            background: var(--primary);
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.4, 1);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .navbar .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #fff;
-            animation: fadeIn 2s ease-in-out;
+        .button:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3);
         }
 
-        .navbar .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 1.5rem;
+        .button:active {
+            transform: translateY(1px);
         }
 
-        .navbar .nav-links a {
-            text-decoration: none;
-            color: #fff;
-            font-size: 1rem;
-            transition: color 0.3s ease;
+        .button::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
         }
 
-        .navbar .nav-links a:hover {
-            color: #007bff;
+        .button:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
         }
 
-        /* Ana İçerik */
-        .main-content, .games-section, .about-section, .contact-section {
-            padding: 2rem;
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
+        .secondary-button {
+            background: var(--accent);
+            margin-top: 15px;
+        }
+
+        .message {
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 15px;
+            display: none;
             text-align: center;
-        }
-
-        .main-content h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            animation: fadeIn 2s ease-in-out;
-        }
-
-        .main-content p {
-            font-size: 1.2rem;
-            animation: fadeIn 3s ease-in-out;
+            animation: fadeIn 0.5s ease;
         }
 
         @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Oyunlar Bölümü */
-        .games-grid {
+        .success-message {
+            background-color: rgba(46, 204, 113, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .error-message {
+            background-color: rgba(231, 76, 60, 0.15);
+            color: var(--error);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .application-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .application-card:hover {
+            background: rgba(0, 0, 0, 0.4);
+            transform: translateX(5px);
+        }
+
+        .application-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--secondary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .application-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .application-card p {
+            font-size: 15px;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .application-card .meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .status-pending {
+            background: rgba(243, 156, 18, 0.15);
+            color: var(--pending);
+        }
+
+        .status-approved {
+            background: rgba(46, 204, 113, 0.15);
+            color: var(--success);
+        }
+
+        .status-rejected {
+            background: rgba(231, 76, 60, 0.15);
+            color: var(--error);
+        }
+
+        .loading {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Oyun Alanı */
+        .game-container {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .game-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        #gameCanvas {
+            background: #000;
+            border-radius: 10px;
+            display: block;
+            margin: 0 auto;
+            border: 2px solid var(--accent);
+        }
+
+        .game-instructions {
+            margin-top: 15px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .game-controls {
+            margin-top: 15px;
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        .game-card {
-            background: rgba(30, 30, 30, 0.8);
-            padding: 1.5rem;
+        .game-btn {
+            padding: 8px 15px;
+            border-radius: 8px;
+            background: var(--primary);
+            color: var(--secondary);
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .game-btn:hover {
+            background: var(--accent);
+        }
+
+        /* Başvuru Durumu */
+        .application-status {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            width: 200px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
         }
 
-        .game-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+        .status-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--secondary);
         }
 
-        .game-card img {
-            border-radius: 10px;
-            width: 100%;
-            height: auto;
+        .status-text {
+            font-size: 16px;
+            color: var(--text);
         }
 
-        .game-card h3 {
-            margin: 1rem 0 0.5rem;
-            font-size: 1.2rem;
+        .status-pending-text {
+            color: var(--pending);
         }
 
-        .game-card p {
-            font-size: 0.9rem;
-            color: #ccc;
+        .status-approved-text {
+            color: var(--success);
         }
 
-        .game-card button {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
+        .status-rejected-text {
+            color: var(--error);
         }
 
-        .game-card button:hover {
-            background: #0056b3;
-        }
-
-        /* Hakkında Bölümü */
-        .about-section p {
-            font-size: 1.1rem;
-            color: #ccc;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* İletişim Bölümü */
-        .contact-section form {
+        /* Admin Kontrolleri */
+        .admin-controls {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            max-width: 500px;
-            margin: 0 auto;
+            gap: 10px;
+            margin-top: 15px;
         }
 
-        .contact-section input, .contact-section textarea {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #444;
-            border-radius: 5px;
-            background: rgba(30, 30, 30, 0.8);
-            color: #fff;
-            font-size: 1rem;
-        }
-
-        .contact-section textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .contact-section button {
-            background: #007bff;
-            color: white;
+        .admin-btn {
+            flex: 1;
+            padding: 8px;
+            border-radius: 8px;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
         }
 
-        .contact-section button:hover {
-            background: #0056b3;
+        .approve-btn {
+            background: rgba(46, 204, 113, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
         }
 
-        /* Footer */
-        footer {
+        .approve-btn:hover {
+            background: rgba(46, 204, 113, 0.3);
+        }
+
+        .reject-btn {
+            background: rgba(231, 76, 60, 0.2);
+            color: var(--error);
+            border: 1px solid var(--error);
+        }
+
+        .reject-btn:hover {
+            background: rgba(231, 76, 60, 0.3);
+        }
+
+        /* Tab Bar */
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            background: var(--card);
+            border-radius: 15px;
+            padding: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tab {
+            flex: 1;
             text-align: center;
-            padding: 1rem;
-            background: rgba(20, 20, 20, 0.8);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
-            margin-top: 2rem;
+            padding: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            position: relative;
+            overflow: hidden;
         }
 
-        footer p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: #ccc;
+        .tab.active {
+            background: var(--primary);
+            color: var(--secondary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .tab.active::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        /* Animasyonlu arka plan için daireler oluştur */
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--secondary);
+            opacity: 0.05;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-1000px) rotate(720deg); }
         }
     </style>
 </head>
 <body>
-    <!-- Arka Plan Animasyonu -->
-    <div class="background-animation"></div>
-    <div class="stars"></div>
+    <!-- Arka plan animasyonu -->
+    <div class="bg-animation" id="bgAnimation"></div>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="logo">Derin Studios</div>
-        <ul class="nav-links">
-            <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="#games"><i class="fas fa-gamepad"></i> Games</a></li>
-            <li><a href="#about"><i class="fas fa-info-circle"></i> About</a></li>
-            <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
-        </ul>
-    </nav>
+    <div class="container">
+        <header>
+            <h1>Derin Studios</h1>
+            <p class="subtitle">Grup başvuru sistemi</p>
+        </header>
 
-    <!-- Ana İçerik -->
-    <section class="main-content" id="home">
-        <h1>Welcome to Derin Studios</h1>
-        <p>Explore the best games and have fun!</p>
-    </section>
-
-    <!-- Oyunlar Bölümü -->
-    <section class="games-section" id="games">
-        <h2>Our Games</h2>
-        <div class="games-grid">
-            <div class="game-card">
-                <img src="https://via.placeholder.com/200" alt="Game 1">
-                <h3>Game 1</h3>
-                <p>An exciting adventure game.</p>
-                <button>Play Now</button>
-            </div>
-            <div class="game-card">
-                <img src="https://via.placeholder.com/200" alt="Game 2">
-                <h3>Game 2</h3>
-                <p>A thrilling action game.</p>
-                <button>Play Now</button>
-            </div>
-            <div class="game-card">
-                <img src="https://via.placeholder.com/200" alt="Game 3">
-                <h3>Game 3</h3>
-                <p>A challenging puzzle game.</p>
-                <button>Play Now</button>
-            </div>
+        <div class="tabs">
+            <div class="tab active" id="loginTab" onclick="showTab('login')">Giriş</div>
+            <div class="tab" id="registerTab" onclick="showTab('register')">Kayıt</div>
+            <div class="tab hidden" id="applicationTab" onclick="showTab('application')">Başvuru</div>
+            <div class="tab hidden" id="adminTab" onclick="showTab('admin')">Admin</div>
         </div>
-    </section>
 
-    <!-- Hakkında Bölümü -->
-    <section class="about-section" id="about">
-        <h2>About Us</h2>
-        <p>We are Derin Studios, a team of passionate game developers creating fun and engaging games for everyone.</p>
-    </section>
+        <!-- Giriş Formu -->
+        <div class="card" id="loginSection">
+            <div id="loginMessage" class="message"></div>
+            
+            <div class="form-group">
+                <label for="loginUsername">Kullanıcı Adı</label>
+                <input type="text" id="loginUsername" placeholder="Kullanıcı adınız">
+            </div>
+            
+            <div class="form-group">
+                <label for="loginPassword">Şifre</label>
+                <input type="password" id="loginPassword" placeholder="Şifreniz">
+            </div>
+            
+            <button class="button" onclick="login()">
+                <span id="loginButtonText">Giriş Yap</span>
+                <span id="loginSpinner" class="loading hidden"></span>
+            </button>
+        </div>
 
-    <!-- İletişim Bölümü -->
-    <section class="contact-section" id="contact">
-        <h2>Contact Us</h2>
-        <form>
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <textarea placeholder="Your Message" required></textarea>
-            <button type="submit">Send Message</button>
-        </form>
-    </section>
+        <!-- Kayıt Formu -->
+        <div class="card hidden" id="registerSection">
+            <div id="registerMessage" class="message"></div>
+            
+            <div class="form-group">
+                <label for="registerUsername">Kullanıcı Adı</label>
+                <input type="text" id="registerUsername" placeholder="Kullanıcı adı seçin">
+            </div>
+            
+            <div class="form-group">
+                <label for="registerPassword">Şifre</label>
+                <input type="password" id="registerPassword" placeholder="En az 6 karakter">
+            </div>
+            
+            <div class="form-group">
+                <label for="registerPasswordConfirm">Şifre Tekrar</label>
+                <input type="password" id="registerPasswordConfirm" placeholder="Şifrenizi tekrar girin">
+            </div>
+            
+            <button class="button" onclick="register()">
+                <span id="registerButtonText">Kayıt Ol</span>
+                <span id="registerSpinner" class="loading hidden"></span>
+            </button>
+        </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2023 Derin Studios. All rights reserved.</p>
-    </footer>
+        <!-- Başvuru Formu -->
+        <div class="card hidden" id="applicationSection">
+            <div id="applicationMessage" class="message"></div>
+            
+            <div class="form-group">
+                <label for="robloxNick">Roblox Kullanıcı Adı</label>
+                <input type="text" id="robloxNick" placeholder="Roblox'taki nickiniz">
+            </div>
+            
+            <div class="form-group">
+                <label for="age">Yaşınız</label>
+                <input type="number" id="age" placeholder="Yaşınız" min="10" max="99">
+            </div>
+            
+            <div class="form-group">
+                <label for="panelUsage">Panel/Leak kullanıyor musunuz?</label>
+                <select id="panelUsage">
+                    <option value="">Seçim yapın</option>
+                    <option value="evet">Evet</option>
+                    <option value="hayir">Hayır</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="experience">Deneyiminiz (Opsiyonel)</label>
+                <textarea id="experience" placeholder="Roblox geliştirme deneyiminiz varsa yazın"></textarea>
+            </div>
+            
+            <button class="button" onclick="submitApplication()">
+                <span id="applicationButtonText">Başvuruyu Gönder</span>
+                <span id="applicationSpinner" class="loading hidden"></span>
+            </button>
+            
+            <button class="button secondary-button" onclick="logout()">Çıkış Yap</button>
+        </div>
 
-    <script src="script.js"></script>
+        <!-- Admin Paneli -->
+        <div class="card hidden" id="adminSection">
+            <h2 style="margin-bottom: 20px; text-align: center;">Başvurular</h2>
+            
+            <div id="applicationsList">
+                <p style="text-align: center; color: var(--text-secondary);">Yükleniyor...</p>
+            </div>
+            
+            <button class="button secondary-button" onclick="logout()">Çıkış Yap</button>
+        </div>
+
+        <!-- Başvuru Durumu -->
+        <div class="application-status hidden" id="applicationStatus">
+            <h3 class="status-title">Başvuru Durumu</h3>
+            <p class="status-text" id="statusText"></p>
+        </div>
+
+        <!-- Oyun Alanı -->
+        <div class="game-container hidden" id="gameContainer">
+            <h3 class="game-title">Dinozor Oyunu</h3>
+            <canvas id="gameCanvas" width="600" height="200"></canvas>
+            <div class="game-controls">
+                <button class="game-btn" id="startBtn">Başlat</button>
+                <button class="game-btn" id="jumpBtn">Zıpla</button>
+            </div>
+            <p class="game-instructions">Başvurunuz değerlendirilirken bu oyunu oynayabilirsiniz.<br>Zıpla butonuna basarak veya boşluk tuşuna basarak engellerden atlayın!</p>
+        </div>
+    </div>
+
+    <script>
+        // Veri depolama (gerçek uygulamada backend kullanın)
+        let users = [
+            { username: "admin", password: "admin123", isAdmin: true }
+        ];
+        
+        let applications = [];
+        let currentUser = null;
+        let currentApplication = null;
+
+        // Sayfa yüklendiğinde
+        document.addEventListener('DOMContentLoaded', function() {
+            // Arka plan animasyonu için daireler oluştur
+            createBackgroundCircles();
+            
+            // Oyun canvas'ını hazırla
+            initGame();
+            
+            // iOS tarzı input focus efekti
+            document.querySelectorAll('input, select, textarea').forEach(el => {
+                el.addEventListener('focus', function() {
+                    this.parentNode.querySelector('label').style.color = 'var(--accent)';
+                });
+                
+                el.addEventListener('blur', function() {
+                    this.parentNode.querySelector('label').style.color = 'var(--text-secondary)';
+                });
+            });
+        });
+
+        // Arka plana animasyonlu daireler ekle
+        function createBackgroundCircles() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const colors = ['#ffffff', '#ff4757', '#747d8c'];
+            
+            for (let i = 0; i < 20; i++) {
+                const circle = document.createElement('div');
+                circle.className = 'bg-circle';
+                
+                const size = Math.random() * 100 + 50;
+                const posX = Math.random() * window.innerWidth;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 20 + 10;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.left = `${posX}px`;
+                circle.style.bottom = `-${size}px`;
+                circle.style.animationDelay = `${delay}s`;
+                circle.style.animationDuration = `${duration}s`;
+                circle.style.background = color;
+                
+                bgAnimation.appendChild(circle);
+            }
+        }
+
+        // Tab geçişleri
+        function showTab(tabName) {
+            // Tüm tab ve section'ları gizle
+            document.querySelectorAll('.tab, .card, .application-status, .game-container').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Aktif tab'ı göster
+            document.getElementById(tabName + 'Tab').classList.remove('hidden');
+            document.getElementById(tabName + 'Section').classList.remove('hidden');
+            
+            // Diğer tab'ları kontrol et
+            if (tabName === 'login' || tabName === 'register') {
+                document.getElementById('loginTab').classList.remove('hidden');
+                document.getElementById('registerTab').classList.remove('hidden');
+                
+                if (tabName === 'login') {
+                    document.getElementById('loginTab').classList.add('active');
+                    document.getElementById('registerTab').classList.remove('active');
+                } else {
+                    document.getElementById('registerTab').classList.add('active');
+                    document.getElementById('loginTab').classList.remove('active');
+                }
+            } else {
+                document.getElementById(tabName + 'Tab').classList.add('active');
+            }
+            
+            // Eğer giriş yapılmışsa ve başvuru varsa durumu göster
+            if (currentUser && !currentUser.isAdmin) {
+                checkApplicationStatus();
+            }
+            
+            // Admin ise başvuruları göster
+            if (currentUser && currentUser.isAdmin) {
+                displayApplications();
+            }
+        }
+
+        // Mesaj gösterimi
+        function showMessage(elementId, message, isSuccess) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = 'message ' + (isSuccess ? 'success-message' : 'error-message');
+            element.style.display = 'block';
+            
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+
+        // Yükleme animasyonu
+        function toggleLoading(buttonId, spinnerId, textId, isLoading) {
+            document.getElementById(buttonId).disabled = isLoading;
+            document.getElementById(spinnerId).classList.toggle('hidden', !isLoading);
+            document.getElementById(textId).classList.toggle('hidden', isLoading);
+        }
+
+        // Giriş fonksiyonu
+        function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            toggleLoading('loginButtonText', 'loginSpinner', 'loginButtonText', true);
+            
+            setTimeout(() => {
+                const user = users.find(u => u.username === username && u.password === password);
+                
+                if (user) {
+                    currentUser = user;
+                    showMessage('loginMessage', "Giriş başarılı! Yönlendiriliyorsunuz...", true);
+                    
+                    // Giriş alanlarını temizle
+                    document.getElementById('loginUsername').value = "";
+                    document.getElementById('loginPassword').value = "";
+                    
+                    // Admin ise admin panelini göster, değilse başvuru formunu göster
+                    if (user.isAdmin) {
+                        document.getElementById('adminTab').classList.remove('hidden');
+                        setTimeout(() => showTab('admin'), 1000);
+                    } else {
+                        document.getElementById('applicationTab').classList.remove('hidden');
+                        setTimeout(() => showTab('application'), 1000);
+                    }
+                } else {
+                    showMessage('loginMessage', "Kullanıcı adı veya şifre hatalı!", false);
+                }
+                
+                toggleLoading('loginButtonText', 'loginSpinner', 'loginButtonText', false);
+            }, 1000);
+        }
+
+        // Kayıt fonksiyonu
+        function register() {
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const passwordConfirm = document.getElementById('registerPasswordConfirm').value;
+            
+            toggleLoading('registerButtonText', 'registerSpinner', 'registerButtonText', true);
+            
+            setTimeout(() => {
+                if (username.length < 3) {
+                    showMessage('registerMessage', "Kullanıcı adı en az 3 karakter olmalıdır!", false);
+                    toggleLoading('registerButtonText', 'registerSpinner', 'registerButtonText', false);
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    showMessage('registerMessage', "Şifre en az 6 karakter olmalıdır!", false);
+                    toggleLoading('registerButtonText', 'registerSpinner', 'registerButtonText', false);
+                    return;
+                }
+                
+                if (password !== passwordConfirm) {
+                    showMessage('registerMessage', "Şifreler uyuşmuyor!", false);
+                    toggleLoading('registerButtonText', 'registerSpinner', 'registerButtonText', false);
+                    return;
+                }
+                
+                if (users.some(u => u.username === username)) {
+                    showMessage('registerMessage', "Bu kullanıcı adı zaten alınmış!", false);
+                    toggleLoading('registerButtonText', 'registerSpinner', 'registerButtonText', false);
+                    return;
+                }
+                
+                users.push({ username, password, isAdmin: false });
+                showMessage('registerMessage', "Kayıt başarılı! Giriş yapabilirsiniz.", true);
+                
+                // Giriş alanlarını temizle
+                document.getElementById('registerUsername').value = "";
+                document.getElementById('registerPassword').value = "";
+                document.getElementById('registerPasswordConfirm').value = "";
+                
+                toggleLoading('registerButtonText', 'registerSpinner', 'registerButtonText', false);
+                
+                // Giriş sekmesine geç
+                setTimeout(() => showTab('login'), 1000);
+            }, 1000);
+        }
+
+        // Başvuru gönderme
+        function submitApplication() {
+            const robloxNick = document.getElementById('robloxNick').value;
+            const age = document.getElementById('age').value;
+            const panelUsage = document.getElementById('panelUsage').value;
+            const experience = document.getElementById('experience').value;
+            
+            toggleLoading('applicationButtonText', 'applicationSpinner', 'applicationButtonText', true);
+            
+            setTimeout(() => {
+                if (!robloxNick || !age || !panelUsage) {
+                    showMessage('applicationMessage', "Lütfen zorunlu alanları doldurun!", false);
+                    toggleLoading('applicationButtonText', 'applicationSpinner', 'applicationButtonText', false);
+                    return;
+                }
+                
+                const application = {
+                    id: Date.now(),
+                    username: currentUser.username,
+                    robloxNick,
+                    age,
+                    panelUsage,
+                    experience,
+                    date: new Date().toLocaleString('tr-TR'),
+                    status: "Beklemede",
+                    adminAction: null
+                };
+                
+                applications.push(application);
+                currentApplication = application;
+                showMessage('applicationMessage', "Başvurunuz gönderildi! Teşekkürler.", true);
+                
+                // Formu temizle
+                document.getElementById('robloxNick').value = "";
+                document.getElementById('age').value = "";
+                document.getElementById('panelUsage').value = "";
+                document.getElementById('experience').value = "";
+                
+                toggleLoading('applicationButtonText', 'applicationSpinner', 'applicationButtonText', false);
+                
+                // Başvuru durumunu ve oyunu göster
+                checkApplicationStatus();
+            }, 1000);
+        }
+
+        // Başvuru durumunu kontrol et
+        function checkApplicationStatus() {
+            const statusElement = document.getElementById('applicationStatus');
+            const statusText = document.getElementById('statusText');
+            const gameContainer = document.getElementById('gameContainer');
+            
+            if (!currentUser || currentUser.isAdmin) return;
+            
+            // Kullanıcının son başvurusunu bul
+            const userApplications = applications.filter(app => app.username === currentUser.username);
+            if (userApplications.length === 0) {
+                statusElement.classList.add('hidden');
+                gameContainer.classList.add('hidden');
+                return;
+            }
+            
+            const lastApplication = userApplications[userApplications.length - 1];
+            currentApplication = lastApplication;
+            
+            statusElement.classList.remove('hidden');
+            gameContainer.classList.remove('hidden');
+            
+            switch(lastApplication.status) {
+                case "Beklemede":
+                    statusText.textContent = "Başvurunuz değerlendirme aşamasında...";
+                    statusText.className = "status-text status-pending-text";
+                    break;
+                case "Onaylandı":
+                    statusText.textContent = "Tebrikler! Başvurunuz onaylandı.";
+                    statusText.className = "status-text status-approved-text";
+                    gameContainer.classList.add('hidden');
+                    break;
+                case "Reddedildi":
+                    statusText.textContent = "Maalesef başvurunuz reddedildi.";
+                    statusText.className = "status-text status-rejected-text";
+                    gameContainer.classList.add('hidden');
+                    break;
+            }
+        }
+
+        // Başvuruları görüntüleme (admin)
+        function displayApplications() {
+            const listElement = document.getElementById('applicationsList');
+            
+            // Yükleme animasyonu
+            listElement.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Yükleniyor...</p>';
+            
+            setTimeout(() => {
+                if (applications.length === 0) {
+                    listElement.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Henüz başvuru bulunmamaktadır.</p>';
+                    return;
+                }
+                
+                // Tüm başvuruları göster (eskiden sadece bekleyenler gösteriliyordu)
+                listElement.innerHTML = "";
+                
+                applications.forEach(app => {
+                    const card = document.createElement('div');
+                    card.className = 'application-card';
+                    card.innerHTML = `
+                        <h3>${app.robloxNick}</h3>
+                        <p><strong>Kullanıcı:</strong> ${app.username}</p>
+                        <p><strong>Yaş:</strong> ${app.age}</p>
+                        <p><strong>Panel/Leak:</strong> ${app.panelUsage === 'evet' ? 'Evet' : 'Hayır'}</p>
+                        ${app.experience ? `<p><strong>Deneyim:</strong> ${app.experience}</p>` : ''}
+                        <div class="meta">
+                            <p>${app.date}</p>
+                            <div class="status-badge ${app.status === 'Onaylandı' ? 'status-approved' : app.status === 'Reddedildi' ? 'status-rejected' : 'status-pending'}">
+                                ${app.status}
+                            </div>
+                        </div>
+                        ${app.status === 'Beklemede' ? `
+                        <div class="admin-controls">
+                            <button class="admin-btn approve-btn" onclick="processApplication(${app.id}, 'Onaylandı')">Onayla</button>
+                            <button class="admin-btn reject-btn" onclick="processApplication(${app.id}, 'Reddedildi')">Reddet</button>
+                        </div>
+                        ` : ''}
+                    `;
+                    listElement.appendChild(card);
+                });
+            }, 800);
+        }
+
+        // Başvuruyu işleme (admin)
+        function processApplication(id, action) {
+            const application = applications.find(app => app.id === id);
+            if (application) {
+                application.status = action;
+                application.adminAction = action;
+                
+                // Başvuru listesini güncelle
+                displayApplications();
+                
+                // Eğer kullanıcı giriş yapmışsa ve bu onun başvurusuysa durumu güncelle
+                if (currentUser && !currentUser.isAdmin && currentApplication && currentApplication.id === id) {
+                    checkApplicationStatus();
+                }
+            }
+        }
+
+        // Çıkış yap
+        function logout() {
+            currentUser = null;
+            currentApplication = null;
+            document.getElementById('adminTab').classList.add('hidden');
+            document.getElementById('applicationTab').classList.add('hidden');
+            document.getElementById('applicationStatus').classList.add('hidden');
+            document.getElementById('gameContainer').classList.add('hidden');
+            showTab('login');
+        }
+
+        // Oyun kodları
+        let gameInitialized = false;
+        let canvas, ctx;
+        let dino, obstacles = [];
+        let score = 0;
+        let gameSpeed = 5;
+        let isJumping = false;
+        let jumpVelocity = 0;
+        let gravity = 0.5;
+        let gameRunning = false;
+        let lastFrameTime = 0;
+        let obstacleInterval = 2000; // Engel oluşturma aralığı (ms)
+        let lastObstacleTime = 0;
+
+        function initGame() {
+            if (gameInitialized) return;
+            
+            canvas = document.getElementById('gameCanvas');
+            ctx = canvas.getContext('2d');
+            
+            // Dinozor karakteri
+            dino = {
+                x: 50,
+                y: canvas.height - 50,
+                width: 40,
+                height: 50,
+                color: '#ffffff'
+            };
+            
+            // Oyun kontrolleri
+            document.addEventListener('keydown', function(e) {
+                if (!gameRunning) return;
+                
+                if ((e.code === 'Space' || e.key === 'ArrowUp' || e.key === 'w') && !isJumping) {
+                    jump();
+                }
+            });
+            
+            // Mobil için dokunmatik kontrol
+            document.getElementById('jumpBtn').addEventListener('click', function() {
+                if (gameRunning && !isJumping) {
+                    jump();
+                }
+            });
+            
+            // Oyunu başlat butonu
+            document.getElementById('startBtn').addEventListener('click', function() {
+                if (!gameRunning) {
+                    startGame();
+                }
+            });
+            
+            gameInitialized = true;
+        }
+
+        function jump() {
+            isJumping = true;
+            jumpVelocity = -12;
+        }
+
+        function startGame() {
+            if (gameRunning) return;
+            
+            // Oyun durumunu sıfırla
+            obstacles = [];
+            score = 0;
+            gameSpeed = 5;
+            isJumping = false;
+            jumpVelocity = 0;
+            lastObstacleTime = 0;
+            
+            dino.y = canvas.height - 50;
+            
+            gameRunning = true;
+            lastFrameTime = performance.now();
+            requestAnimationFrame(gameLoop);
+        }
+
+        function gameLoop(timestamp) {
+            if (!gameRunning) return;
+            
+            const deltaTime = timestamp - lastFrameTime;
+            lastFrameTime = timestamp;
+            
+            // Ekranı temizle
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Zemin çiz
+            ctx.fillStyle = '#333333';
+            ctx.fillRect(0, canvas.height - 10, canvas.width, 10);
+            
+            // Dinozor hareketi
+            if (isJumping) {
+                dino.y += jumpVelocity;
+                jumpVelocity += gravity;
+                
+                // Zemin kontrolü
+                if (dino.y >= canvas.height - 50) {
+                    dino.y = canvas.height - 50;
+                    isJumping = false;
+                }
+            }
+            
+            // Dinozor çiz
+            ctx.fillStyle = dino.color;
+            ctx.fillRect(dino.x, dino.y, dino.width, dino.height);
+            
+            // Engel oluştur (zaman tabanlı)
+            if (timestamp - lastObstacleTime > obstacleInterval) {
+                const height = Math.random() * 30 + 20;
+                obstacles.push({
+                    x: canvas.width,
+                    y: canvas.height - height - 10,
+                    width: 20,
+                    height: height,
+                    color: '#ff4757'
+                });
+                lastObstacleTime = timestamp;
+                
+                // Engel aralığını rastgele yap (1500-2500ms arası)
+                obstacleInterval = Math.random() * 1000 + 1500;
+            }
+            
+            // Engelleri hareket ettir ve çiz
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                const obs = obstacles[i];
+                obs.x -= gameSpeed * (deltaTime / 16); // Delta time için normalize et
+                
+                ctx.fillStyle = obs.color;
+                ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+                
+                // Çarpışma kontrolü
+                if (
+                    dino.x < obs.x + obs.width &&
+                    dino.x + dino.width > obs.x &&
+                    dino.y < obs.y + obs.height &&
+                    dino.y + dino.height > obs.y
+                ) {
+                    gameOver();
+                    return;
+                }
+                
+                // Ekran dışına çıkan engelleri kaldır
+                if (obs.x + obs.width < 0) {
+                    obstacles.splice(i, 1);
+                    score++;
+                    
+                    // Her 5 puan için oyun hızını artır
+                    if (score % 5 === 0) {
+                        gameSpeed += 0.5;
+                    }
+                }
+            }
+            
+            // Skor yaz
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '20px Montserrat';
+            ctx.fillText(`Skor: ${score}`, 20, 30);
+            
+            requestAnimationFrame(gameLoop);
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '30px Montserrat';
+            ctx.textAlign = 'center';
+            ctx.fillText('Oyun Bitti!', canvas.width / 2, canvas.height / 2 - 30);
+            ctx.font = '20px Montserrat';
+            ctx.fillText(`Skor: ${score}`, canvas.width / 2, canvas.height / 2 + 10);
+            ctx.fillText('Tekrar oynamak için Başlat butonuna basın', canvas.width / 2, canvas.height / 2 + 50);
+            ctx.textAlign = 'left';
+        }
+    </script>
 </body>
 </html>
